@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EASTLONE Cafe — Your Cozy Coffee Retreat in Iligan City</title>
+  <meta name="description" content="EASTLONE Cafe is a warm, rustic coffee spot in Iligan City serving handcrafted drinks, chill vibes, and a welcoming space for friends, solo work, and quiet afternoons." />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: flex-end;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('images/hero-outdoor.jpg');
+      background-size: cover;
+      background-position: center 40%;
+      transform: scale(1.04);
+      transition: transform 8s ease;
+    }
+
+    .hero-bg.loaded { transform: scale(1); }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to top,
+        rgba(8,7,5,0.98)   0%,
+        rgba(8,7,5,0.88)  35%,
+        rgba(8,7,5,0.72)  65%,
+        rgba(8,7,5,0.60) 100%
+      );
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 0 2rem 90px;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 0.7rem;
+      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.22em;
+      text-transform: uppercase; color: var(--gold);
+      text-shadow: 0 1px 8px rgba(0,0,0,0.9);
+      margin-bottom: 1.4rem;
+    }
+
+    .hero-eyebrow span { width: 28px; height: 1px; background: var(--gold); }
+
+    .hero-headline {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(4rem, 10vw, 9rem);
+      line-height: 0.95;
+      color: var(--white);
+      letter-spacing: 0.02em;
+      margin-bottom: 1.8rem;
+      max-width: 900px;
+      text-shadow: 0 2px 24px rgba(0,0,0,0.8), 0 1px 4px rgba(0,0,0,0.9);
+    }
+
+    .hero-headline em {
+      font-style: normal;
+      color: var(--gold);
+      display: block;
+    }
+
+    .hero-sub {
+      font-size: 1.05rem;
+      color: var(--cream-dim);
+      line-height: 1.75;
+      max-width: 520px;
+      margin-bottom: 2.8rem;
+      text-shadow: 0 1px 8px rgba(0,0,0,0.9);
+    }
+
+    .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 3.5rem; }
+
+    .hero-strip {
+      display: flex;
+      gap: 0;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: var(--radius);
+      overflow: hidden;
+      backdrop-filter: blur(12px);
+      background: rgba(8,7,5,0.55);
+      max-width: 560px;
+    }
+
+    .strip-item {
+      flex: 1;
+      padding: 1.1rem 1.4rem;
+      border-right: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .strip-item:last-child { border-right: none; }
+
+    .strip-item strong {
+      display: block;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.4rem;
+      color: var(--gold);
+      letter-spacing: 0.05em;
+      line-height: 1;
+      margin-bottom: 0.2rem;
+    }
+
+    .strip-item span { font-size: 0.73rem; color: var(--cream-dim); letter-spacing: 0.06em; }
+
+    /* scroll hint */
+    .scroll-hint {
+      position: absolute;
+      bottom: 2.5rem;
+      right: 2rem;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.68rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(240,235,224,0.4);
+    }
+
+    .scroll-line {
+      width: 1px;
+      height: 48px;
+      background: linear-gradient(to bottom, rgba(255,255,255,0.35), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.4; transform: scaleY(1); }
+      50% { opacity: 1; transform: scaleY(0.6); }
+    }
+
+    /* ── INTRO ── */
+    .intro-section {
+      background: var(--dark);
+      border-top: 1px solid var(--border-sub);
+      border-bottom: 1px solid var(--border-sub);
+    }
+
+    .intro-photo {
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      aspect-ratio: 4/5;
+    }
+
+    .intro-photo img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.7s ease;
+    }
+
+    .intro-photo:hover img { transform: scale(1.03); }
+
+    .intro-text {
+      font-size: 1.05rem;
+      color: var(--cream-dim);
+      line-height: 1.85;
+      margin-bottom: 1.5rem;
+    }
+
+    .intro-highlights { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 2rem; }
+
+    .intro-highlights li {
+      display: flex; align-items: flex-start;
+      gap: 0.75rem; font-size: 0.95rem; color: var(--cream-dim);
+    }
+
+    .intro-highlights li::before {
+      content: '✦'; color: var(--gold);
+      font-size: 0.65rem; margin-top: 0.38rem; flex-shrink: 0;
+    }
+
+    /* ── DRINKS ── */
+    .drinks-section { background: var(--black); }
+
+    .section-heading { font-size: clamp(2.8rem, 5vw, 4.5rem); margin-bottom: 0.4rem; }
+
+    .drink-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-sub);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      position: relative;
+      overflow: hidden;
+      transition: background var(--transition), border-color var(--transition), transform var(--transition);
+    }
+
+    .drink-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, var(--gold), transparent);
+      opacity: 0; transition: opacity var(--transition);
+    }
+
+    .drink-card:hover { background: var(--card-hover); border-color: var(--border); transform: translateY(-5px); }
+    .drink-card:hover::before { opacity: 1; }
+
+    .drink-tag {
+      display: inline-block;
+      background: rgba(255,255,255,0.07); color: var(--gold);
+      font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; padding: 0.22rem 0.7rem;
+      border-radius: 3px; margin-bottom: 1rem;
+    }
+
+    .drink-emoji { font-size: 1.8rem; margin-bottom: 0.8rem; }
+    .drink-card h3 { font-size: clamp(1.4rem, 2.5vw, 1.8rem); margin-bottom: 0.4rem; }
+    .drink-card p { font-size: 0.88rem; color: var(--cream-dim); line-height: 1.65; }
+
+    /* ── PHOTO GALLERY STRIP ── */
+    .gallery-strip {
+      background: var(--dark);
+      border-top: 1px solid var(--border-sub);
+      border-bottom: 1px solid var(--border-sub);
+      padding: 80px 0;
+      overflow: hidden;
+    }
+
+    .gallery-track {
+      display: flex;
+      gap: 1.25rem;
+      animation: galleryScroll 28s linear infinite;
+      width: max-content;
+    }
+
+    .gallery-track:hover { animation-play-state: paused; }
+
+    @keyframes galleryScroll {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    .gallery-thumb {
+      width: 260px;
+      height: 320px;
+      flex-shrink: 0;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      border: 1px solid var(--border-sub);
+    }
+
+    .gallery-thumb img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+
+    .gallery-thumb:hover img { transform: scale(1.06); }
+
+    /* ── VIBE ── */
+    .vibe-section { background: var(--black); }
+
+    .vibe-photo-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 260px 260px;
+      gap: 1rem;
+    }
+
+    .vibe-photo-col .photo-card:first-child {
+      grid-column: 1 / -1;
+    }
+
+    .vibe-cards { display: flex; flex-direction: column; gap: 1.25rem; }
+
+    .vibe-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-sub);
+      border-radius: var(--radius-lg);
+      padding: 1.6rem;
+      display: flex;
+      gap: 1.2rem;
+      align-items: flex-start;
+      transition: var(--transition);
+    }
+
+    .vibe-card:hover { border-color: var(--border); background: var(--card-hover); }
+    .vibe-icon { font-size: 1.6rem; flex-shrink: 0; line-height: 1; margin-top: 0.1rem; }
+    .vibe-card h3 { font-size: clamp(1.2rem, 2vw, 1.5rem); margin-bottom: 0.3rem; }
+    .vibe-card p { font-size: 0.88rem; color: var(--cream-dim); }
+
+    /* ── CTA BANNER ── */
+    .cta-banner {
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+      padding: 120px 0;
+      background: var(--dark);
+      border-top: 1px solid var(--border-sub);
+    }
+
+    .cta-banner-bg {
+      position: absolute; inset: 0;
+      background-image: url('images/mobile-bar.jpg');
+      background-size: cover;
+      background-position: center;
+      opacity: 0.15;
+    }
+
+    .cta-banner-content {
+      position: relative; z-index: 1;
+    }
+
+    .cta-banner h2 { font-size: clamp(3rem, 6vw, 5.5rem); margin-bottom: 1rem; }
+    .cta-banner p { color: var(--cream-dim); margin-bottom: 2rem; font-size: 1.05rem; }
+    .cta-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+    @media (max-width: 768px) {
+      .hero-headline { font-size: clamp(3.2rem, 14vw, 5.5rem); }
+      .hero-inner { padding-bottom: 70px; }
+      .hero-strip { max-width: 100%; }
+      .vibe-photo-col { grid-template-columns: 1fr; grid-template-rows: auto auto auto; }
+      .vibe-photo-col .photo-card:first-child { grid-column: 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVIGATION -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <img src="images/logo.svg" alt="EASTLONE Cafe"
+             onerror="this.src='images/logo.jpg'" />
+      </a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="menu.html">Menu</a></li>
+        <li><a href="experience.html">Experience</a></li>
+        <li><a href="events.html">Events</a></li>
+        <li><a href="contact.html" class="nav-cta">Visit Us</a></li>
+      </ul>
+      <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ══ HERO ══ -->
+  <section class="hero">
+    <div class="hero-bg" id="heroBg"></div>
+    <div class="hero-overlay"></div>
+
+    <div class="hero-inner">
+      <div class="hero-eyebrow">
+        <span></span>
+        Iligan City · Est. EASTLONE
+      </div>
+
+      <h1 class="hero-headline">
+        Your Cozy<br />
+        <em>Coffee Retreat</em>
+      </h1>
+
+      <p class="hero-sub">
+        Slow down, sip well, and stay awhile — a warm, rustic spot serving handcrafted drinks, chill vibes, and a welcoming space in the heart of Iligan City.
+      </p>
+
+      <div class="hero-actions">
+        <a href="menu.html" class="btn btn-primary">View Menu</a>
+        <a href="contact.html" class="btn btn-outline">Visit Us</a>
+      </div>
+
+      <div class="hero-strip">
+        <div class="strip-item">
+          <strong>2PM</strong>
+          <span>Opens Daily</span>
+        </div>
+        <div class="strip-item">
+          <strong>Wi-Fi</strong>
+          <span>Work-Friendly</span>
+        </div>
+        <div class="strip-item">
+          <strong>4-Way</strong>
+          <span>Dine · Take · Drive · Deliver</span>
+        </div>
+        <div class="strip-item">
+          <strong>Iligan</strong>
+          <span>Sta. Felomina</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="scroll-hint">
+      <div class="scroll-line"></div>
+      Scroll
+    </div>
+  </section>
+
+  <!-- ══ INTRO ══ -->
+  <section class="intro-section">
+    <div class="container">
+      <div class="grid-2">
+        <div class="intro-photo fade-in">
+          <img src="images/drinks-food-wall.jpg" alt="EASTLONE Cafe food and drinks" loading="lazy" />
+        </div>
+        <div class="fade-in">
+          <p class="section-label">Who We Are</p>
+          <h2 class="section-heading">More Than a Cup of Coffee</h2>
+          <div class="gold-rule"></div>
+          <p class="intro-text">
+            At EASTLONE Cafe, coffee is more than a drink — it's a pause, a reset, and a reason to gather. Tucked in Purok Santan, Sta. Felomina, our café is built for people who love good coffee, comfortable spaces, and unhurried moments.
+          </p>
+          <ul class="intro-highlights">
+            <li>Cozy and relaxing café atmosphere</li>
+            <li>Specialty coffee and handcrafted drinks</li>
+            <li>Great for solo coffee dates, group catch-ups, and work sessions</li>
+            <li>Dine-in, takeaway, delivery, and drive-through available</li>
+          </ul>
+          <a href="about.html" class="btn btn-outline">Our Story</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ FEATURED DRINKS ══ -->
+  <section class="drinks-section">
+    <div class="container">
+      <div class="text-center mb-4 fade-in">
+        <p class="section-label">What We Serve</p>
+        <h2 class="section-heading">Featured Drinks</h2>
+        <div class="gold-rule center"></div>
+        <p style="color:var(--cream-dim); max-width:500px; margin: 0 auto;">
+          From crowd favorites to unique house blends — a menu made to match every mood.
+        </p>
+      </div>
+
+      <div class="grid-3 fade-in" style="margin-top:2.5rem;">
+        <div class="drink-card">
+          <div class="drink-tag">House Favorite</div>
+          <div class="drink-emoji">☕</div>
+          <h3>Spanish Latte</h3>
+          <p>Smooth espresso balanced with a sweet, creamy finish. A timeless café classic.</p>
+        </div>
+        <div class="drink-card">
+          <div class="drink-tag">Signature</div>
+          <div class="drink-emoji">🌾</div>
+          <h3>Dirty Horchata</h3>
+          <p>A standout house favorite with a rich, comforting twist you won't find anywhere else.</p>
+        </div>
+        <div class="drink-card">
+          <div class="drink-tag">Must-Try</div>
+          <div class="drink-emoji">🥚</div>
+          <h3>Vietnamese Egg Coffee</h3>
+          <p>Bold espresso topped with velvety whipped egg yolk cream — uniquely indulgent.</p>
+        </div>
+        <div class="drink-card">
+          <div class="drink-tag">Coffee</div>
+          <div class="drink-emoji">🥛</div>
+          <h3>White Mocha</h3>
+          <p>Subtly sweet espresso with rich white chocolate — warm and comforting.</p>
+        </div>
+        <div class="drink-card">
+          <div class="drink-tag">Non-Coffee</div>
+          <div class="drink-emoji">🍵</div>
+          <h3>Matcha Latte</h3>
+          <p>Earthy ceremonial matcha blended into a smooth, comforting creamy latte.</p>
+        </div>
+        <div class="drink-card">
+          <div class="drink-tag">Coffee</div>
+          <div class="drink-emoji">🖤</div>
+          <h3>Americano</h3>
+          <p>Bold, clean, and pure — the go-to for the espresso purist in all of us.</p>
+        </div>
+      </div>
+
+      <div class="text-center fade-in" style="margin-top:3rem;">
+        <p style="font-family:'Dancing Script',cursive; font-size:1.7rem; color:var(--gold-light); margin-bottom:1.2rem;">
+          Come by for a cup, stay for the vibe.
+        </p>
+        <a href="menu.html" class="btn btn-primary">See Full Menu</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ AUTO-SCROLL GALLERY ══ -->
+  <div class="gallery-strip">
+    <div class="gallery-track" id="galleryTrack">
+      <div class="gallery-thumb"><img src="images/gallery/122168804690836388.jpg" alt="EASTLONE Cafe" loading="lazy" /></div>
+      <div class="gallery-thumb"><img src="images/gallery/122162903114836388.jpg" alt="Drinks and food" loading="lazy" /></div>
+      <div class="gallery-thumb"><img src="images/gallery/122162511062836388.jpg" alt="Iced drinks" loading="lazy" /></div>
+      <div class="gallery-thumb"><img src="images/gallery/122158699370836388.jpg" alt="Outdoor café" loading="lazy" /></div>
+      <div class="gallery-thumb"><img src="images/gallery/122158947266836388.jpg" alt="Outdoor table" loading="lazy" /></div>
+      <div class="gallery-thumb"><img src="images/gallery/122157594164836388.jpg" alt="Coffee and book" loading="lazy" /></div>
+      <div class="gallery-thumb"><img src="images/gallery/122155117472836388.jpg" alt="Café at night" loading="lazy" /></div>
+      <div class="gallery-thumb"><img src="images/gallery/122156933972836388.jpg" alt="Mobile bar" loading="lazy" /></div>
+      <div class="gallery-thumb"><img src="images/gallery/122163158774836388.jpg" alt="Events setup" loading="lazy" /></div>
+      <div class="gallery-thumb"><img src="images/gallery/122167812902836388.jpg" alt="Cup" loading="lazy" /></div>
+      <!-- duplicate for seamless loop -->
+      <div class="gallery-thumb"><img src="images/gallery/122168804690836388.jpg" alt="EASTLONE Cafe" loading="lazy" /></div>
+      <div class="gallery-thumb"><img src="images/gallery/122162903114836388.jpg" alt="Drinks and food" loading="lazy" /></div>
+      <div class="gallery-thumb"><img src="images/gallery/122162511062836388.jpg" alt="Iced drinks" loading="lazy" /></div>
+      <div class="gallery-thumb"><img src="images/gallery/122158699370836388.jpg" alt="Outdoor café" loading="lazy" /></div>
+      <div class="gallery-thumb"><img src="images/gallery/122158947266836388.jpg" alt="Outdoor table" loading="lazy" /></div>
+      <div class="gallery-thumb"><img src="images/gallery/122157594164836388.jpg" alt="Coffee and book" loading="lazy" /></div>
+      <div class="gallery-thumb"><img src="images/gallery/122155117472836388.jpg" alt="Café at night" loading="lazy" /></div>
+      <div class="gallery-thumb"><img src="images/gallery/122156933972836388.jpg" alt="Mobile bar" loading="lazy" /></div>
+      <div class="gallery-thumb"><img src="images/gallery/122163158774836388.jpg" alt="Events setup" loading="lazy" /></div>
+      <div class="gallery-thumb"><img src="images/gallery/122167812902836388.jpg" alt="Cup" loading="lazy" /></div>
+    </div>
+  </div>
+
+  <!-- ══ WHY EASTLONE ══ -->
+  <section class="vibe-section">
+    <div class="container">
+      <div class="grid-2">
+        <div class="vibe-photo-col fade-in">
+          <div class="photo-card" style="height:260px;">
+            <img src="images/cafe-open-night.jpg" alt="EASTLONE Cafe open at night" loading="lazy" />
+          </div>
+          <div class="photo-card">
+            <img src="images/drinks-tray.jpg" alt="Iced drinks" loading="lazy" />
+          </div>
+          <div class="photo-card">
+            <img src="images/coffee-book.jpg" alt="Coffee and book" loading="lazy" />
+          </div>
+        </div>
+
+        <div class="fade-in">
+          <p class="section-label">The Experience</p>
+          <h2 class="section-heading">Why People Love EASTLONE</h2>
+          <div class="gold-rule"></div>
+          <div class="vibe-cards">
+            <div class="vibe-card">
+              <div class="vibe-icon">🛋️</div>
+              <div>
+                <h3>Cozy Atmosphere</h3>
+                <p>Warm, rustic, and easy to settle into — no rush, just vibes.</p>
+              </div>
+            </div>
+            <div class="vibe-card">
+              <div class="vibe-icon">☕</div>
+              <div>
+                <h3>Signature Drinks</h3>
+                <p>Handcrafted every time, from well-loved classics to unique house blends.</p>
+              </div>
+            </div>
+            <div class="vibe-card">
+              <div class="vibe-icon">💻</div>
+              <div>
+                <h3>Work & Study Friendly</h3>
+                <p>Wi-Fi, outlets, and a calm environment — your new favorite remote spot.</p>
+              </div>
+            </div>
+            <div class="vibe-card">
+              <div class="vibe-icon">🤝</div>
+              <div>
+                <h3>Community Feel</h3>
+                <p>A gathering place where Iligan connects, one cup at a time.</p>
+              </div>
+            </div>
+          </div>
+          <a href="experience.html" class="btn btn-outline mt-4">Explore the Experience</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ CTA BANNER ══ -->
+  <section class="cta-banner">
+    <div class="cta-banner-bg"></div>
+    <div class="container cta-banner-content fade-in">
+      <p class="section-label">Mobile Coffee Bar</p>
+      <h2>Bring EASTLONE<br />To Your Event</h2>
+      <p>Handcrafted coffee wherever your occasion takes you — parties, corporate events, gatherings, and more.</p>
+      <div class="cta-actions">
+        <a href="events.html" class="btn btn-primary">Book Our Mobile Bar</a>
+        <a href="contact.html" class="btn btn-outline">Get In Touch</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ FOOTER ══ -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <img src="images/logo.svg" alt="EASTLONE Cafe"
+               onerror="this.src='images/logo.jpg'" />
+          <p>Your cozy coffee retreat in Iligan City — serving handcrafted drinks, comforting vibes, and a space to slow down, sip, and stay awhile.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Navigate</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="menu.html">Menu</a></li>
+            <li><a href="experience.html">Experience</a></li>
+            <li><a href="events.html">Events</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Hours</h4>
+          <ul>
+            <li><a>Mon – Thu: 2PM – 10PM</a></li>
+            <li><a>Fri – Sun: 2PM – 12AM</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Find Us</h4>
+          <ul>
+            <li><a>Purok Santan, Sta. Felomina</a></li>
+            <li><a>Iligan City, Lanao del Norte</a></li>
+            <li><a href="tel:+639605290945">+63 960 529 0945</a></li>
+            <li><a href="https://www.facebook.com/eastlonecafe/" target="_blank">Facebook</a></li>
+            <li><a href="https://www.instagram.com/eastlonecafe/" target="_blank">Instagram</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 EASTLONE Cafe. All rights reserved.</p>
+        <p>Iligan City, Philippines</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Sticky nav
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 60));
+
+    // Mobile menu
+    function toggleMenu() { document.getElementById('navLinks').classList.toggle('open'); }
+
+    // Hero image zoom-in on load
+    window.addEventListener('load', () => {
+      document.getElementById('heroBg').classList.add('loaded');
+    });
+
+    // Scroll fade-in
+    const faders = document.querySelectorAll('.fade-in');
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    faders.forEach(el => obs.observe(el));
+  </script>
+</body>
+</html>

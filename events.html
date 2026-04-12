@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mobile Coffee Bar — EASTLONE Cafe</title>
+  <meta name="description" content="Book EASTLONE Cafe's Mobile Coffee Bar for your event — parties, corporate gatherings, celebrations, and more in Iligan City." />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* EVENTS-SPECIFIC */
+    .events-hero-section {
+      background: var(--black);
+      padding-bottom: 0;
+    }
+
+    .event-intro {
+      background: var(--dark);
+      border-bottom: 1px solid var(--border-sub);
+    }
+
+    .event-lead {
+      font-size: 1.1rem;
+      color: var(--cream-dim);
+      line-height: 1.85;
+      margin-bottom: 1.5rem;
+    }
+
+    /* SETUP CARD */
+    .setup-visual {
+      background: var(--card-bg);
+      border: 1px solid var(--border-sub);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .setup-visual::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center, rgba(255,255,255,0.06), transparent 65%);
+    }
+
+    .setup-visual .setup-icon {
+      font-size: 5rem;
+      position: relative;
+      z-index: 1;
+      margin-bottom: 1rem;
+    }
+
+    .setup-visual p {
+      color: var(--cream-dim);
+      font-size: 0.9rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* WHAT YOU GET */
+    .what-you-get {
+      background: var(--black);
+      border-bottom: 1px solid var(--border-sub);
+    }
+
+    .wyg-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+
+    .wyg-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-sub);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      transition: var(--transition);
+    }
+
+    .wyg-card:hover {
+      border-color: var(--border);
+      transform: translateY(-4px);
+    }
+
+    .wyg-icon {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .wyg-card h3 {
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .wyg-card p {
+      font-size: 0.9rem;
+      color: var(--cream-dim);
+    }
+
+    /* EVENT TYPES */
+    .event-types {
+      background: var(--dark);
+      border-bottom: 1px solid var(--border-sub);
+    }
+
+    .event-type-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+
+    .event-type-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-sub);
+      border-radius: var(--radius-lg);
+      padding: 1.8rem;
+      text-align: center;
+      transition: var(--transition);
+    }
+
+    .event-type-card:hover {
+      border-color: var(--border);
+      background: var(--card-hover);
+    }
+
+    .event-type-card .et-icon {
+      font-size: 2.5rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .event-type-card h3 {
+      font-size: 1rem;
+    }
+
+    /* INQUIRY FORM */
+    .inquiry-section {
+      background: var(--black);
+    }
+
+    .inquiry-form-wrap {
+      background: var(--card-bg);
+      border: 1px solid var(--border-sub);
+      border-radius: var(--radius-lg);
+      padding: 3rem;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--cream-dim);
+      margin-bottom: 0.5rem;
+      letter-spacing: 0.04em;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      background: var(--dark);
+      border: 1px solid var(--border-sub);
+      border-radius: var(--radius);
+      padding: 0.85rem 1.1rem;
+      color: var(--cream);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      transition: border-color var(--transition);
+      outline: none;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--gold);
+    }
+
+    .form-group textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .form-group select option {
+      background: var(--dark);
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    .form-note {
+      font-size: 0.82rem;
+      color: var(--cream-dim);
+      margin-top: 1.2rem;
+      text-align: center;
+    }
+
+    .form-note a {
+      color: var(--gold);
+    }
+
+    @media (max-width: 900px) {
+      .wyg-grid { grid-template-columns: 1fr 1fr; }
+      .event-type-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 600px) {
+      .wyg-grid { grid-template-columns: 1fr; }
+      .event-type-grid { grid-template-columns: 1fr 1fr; }
+      .inquiry-form-wrap { padding: 2rem 1.5rem; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVIGATION -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <img src="images/logo.svg" alt="EASTLONE Cafe" onerror="this.src='images/logo.jpg'" />
+      </a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="menu.html">Menu</a></li>
+        <li><a href="experience.html">Experience</a></li>
+        <li><a href="events.html" class="active">Events</a></li>
+        <li><a href="contact.html" class="nav-cta">Visit Us</a></li>
+      </ul>
+      <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <div class="page-hero">
+    <div class="container">
+      <p class="section-label">Mobile Coffee Bar</p>
+      <h1>Bring EASTLONE to<br />Your Event</h1>
+      <div class="gold-rule center"></div>
+      <p>Make your event more memorable with EASTLONE Cafe's mobile coffee bar setup.</p>
+    </div>
+  </div>
+
+  <!-- INTRO -->
+  <section class="event-intro">
+    <div class="container">
+      <div class="grid-2">
+        <div class="fade-in">
+          <p class="section-label">What We Offer</p>
+          <h2>Mobile Coffee Bar for Events</h2>
+          <div class="gold-rule"></div>
+          <p class="event-lead">
+            Make your event more memorable with EASTLONE Cafe's Mobile Coffee Bar. Bring the coffee experience to your celebration, gathering, activation, or special occasion with a setup designed to serve handcrafted drinks and great café energy wherever you are.
+          </p>
+          <p style="color: var(--cream-dim); font-size:0.95rem; line-height:1.8; margin-bottom:1.5rem;">
+            Planning a private event or community gathering? Get in touch to ask about coffee bar availability, packages, and service options. Our team will work with you to create an experience that fits your occasion.
+          </p>
+          <a href="#inquire" class="btn btn-primary">Book Our Mobile Coffee Bar</a>
+        </div>
+        <div class="setup-visual fade-in" style="padding:0; overflow:hidden; aspect-ratio:4/3;">
+          <img src="images/mobile-bar.jpg" alt="EASTLONE Mobile Coffee Bar"
+               style="width:100%;height:100%;object-fit:cover;" loading="lazy" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT YOU GET -->
+  <section class="what-you-get">
+    <div class="container">
+      <div class="text-center fade-in">
+        <p class="section-label">What to Expect</p>
+        <h2>What's Included</h2>
+        <div class="gold-rule center"></div>
+      </div>
+      <div class="wyg-grid fade-in">
+        <div class="wyg-card">
+          <div class="wyg-icon">☕</div>
+          <h3>Handcrafted Drinks</h3>
+          <p>Your guests get the full EASTLONE experience — signature espresso drinks, lattes, and more prepared fresh on-site.</p>
+        </div>
+        <div class="wyg-card">
+          <div class="wyg-icon">🎨</div>
+          <h3>Branded Setup</h3>
+          <p>A visually appealing mobile bar setup that adds a memorable, café-quality touch to your event space.</p>
+        </div>
+        <div class="wyg-card">
+          <div class="wyg-icon">👨‍🍳</div>
+          <h3>Skilled Baristas</h3>
+          <p>Trained EASTLONE baristas who bring the same care and quality you'd find at the café, right to your event.</p>
+        </div>
+        <div class="wyg-card">
+          <div class="wyg-icon">📋</div>
+          <h3>Custom Menu Options</h3>
+          <p>Work with us to tailor the drink selection to your event — crowd-pleasers or themed creations.</p>
+        </div>
+        <div class="wyg-card">
+          <div class="wyg-icon">🤝</div>
+          <h3>Flexible Packages</h3>
+          <p>We'll work with your budget and headcount to find a package that fits your event perfectly.</p>
+        </div>
+        <div class="wyg-card">
+          <div class="wyg-icon">📍</div>
+          <h3>On-Location Service</h3>
+          <p>We come to you — indoor events, outdoor gatherings, activations, and more within the Iligan City area.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EVENT TYPES -->
+  <section class="event-types">
+    <div class="container">
+      <div class="text-center fade-in">
+        <p class="section-label">Perfect For</p>
+        <h2>Great for Every Occasion</h2>
+        <div class="gold-rule center"></div>
+      </div>
+      <div class="event-type-grid fade-in">
+        <div class="event-type-card">
+          <div class="et-icon">🎉</div>
+          <h3>Birthdays &amp; Celebrations</h3>
+        </div>
+        <div class="event-type-card">
+          <div class="et-icon">💍</div>
+          <h3>Weddings &amp; Bridal Events</h3>
+        </div>
+        <div class="event-type-card">
+          <div class="et-icon">🏢</div>
+          <h3>Corporate Gatherings</h3>
+        </div>
+        <div class="event-type-card">
+          <div class="et-icon">🌟</div>
+          <h3>Brand Activations</h3>
+        </div>
+        <div class="event-type-card">
+          <div class="et-icon">🎓</div>
+          <h3>School / Org Events</h3>
+        </div>
+        <div class="event-type-card">
+          <div class="et-icon">🏘️</div>
+          <h3>Community Gatherings</h3>
+        </div>
+        <div class="event-type-card">
+          <div class="et-icon">🎤</div>
+          <h3>Markets &amp; Pop-Ups</h3>
+        </div>
+        <div class="event-type-card">
+          <div class="et-icon">🎪</div>
+          <h3>Private Parties</h3>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INQUIRY FORM -->
+  <section class="inquiry-section" id="inquire">
+    <div class="container">
+      <div class="text-center fade-in mb-4">
+        <p class="section-label">Get in Touch</p>
+        <h2>Book Our Mobile Coffee Bar</h2>
+        <div class="gold-rule center"></div>
+        <p style="color:var(--cream-dim);">Fill in the details below and we'll get back to you with availability and options.</p>
+      </div>
+      <div class="inquiry-form-wrap fade-in">
+        <form onsubmit="handleSubmit(event)">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="name">Your Name</label>
+              <input type="text" id="name" placeholder="Full name" required />
+            </div>
+            <div class="form-group">
+              <label for="phone">Contact Number</label>
+              <input type="tel" id="phone" placeholder="+63 900 000 0000" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" placeholder="you@email.com" />
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="event-date">Event Date</label>
+              <input type="date" id="event-date" />
+            </div>
+            <div class="form-group">
+              <label for="event-type">Event Type</label>
+              <select id="event-type">
+                <option value="" disabled selected>Select event type</option>
+                <option>Birthday / Celebration</option>
+                <option>Wedding / Bridal Event</option>
+                <option>Corporate Gathering</option>
+                <option>Brand Activation</option>
+                <option>School / Org Event</option>
+                <option>Community Gathering</option>
+                <option>Market / Pop-Up</option>
+                <option>Private Party</option>
+                <option>Other</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="guests">Expected Number of Guests</label>
+            <input type="number" id="guests" placeholder="e.g. 50" min="1" />
+          </div>
+          <div class="form-group">
+            <label for="message">Tell Us More About Your Event</label>
+            <textarea id="message" placeholder="Location, time, special requests, or any questions..."></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width:100%; justify-content:center; font-size:1rem; padding:1rem;">
+            Send Inquiry
+          </button>
+          <p class="form-note">
+            You can also reach us directly at <a href="tel:+639605290945">+63 960 529 0945</a> or via our <a href="https://www.facebook.com/eastlonecafe/" target="_blank">Facebook page</a>.
+          </p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <img src="images/logo.svg" alt="EASTLONE Cafe" onerror="this.src='images/logo.jpg'" />
+          <p>EASTLONE Cafe is your cozy coffee retreat in Iligan City — serving handcrafted drinks, comforting vibes, and a space to slow down, sip, and stay awhile.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Navigate</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="menu.html">Menu</a></li>
+            <li><a href="experience.html">Experience</a></li>
+            <li><a href="events.html">Events</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Hours</h4>
+          <ul>
+            <li><a>Mon – Thu: 2PM – 10PM</a></li>
+            <li><a>Fri – Sun: 2PM – 12AM</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Find Us</h4>
+          <ul>
+            <li><a>Purok Santan, Sta. Felomina</a></li>
+            <li><a>Iligan City, Lanao del Norte</a></li>
+            <li><a href="tel:+639605290945">+63 960 529 0945</a></li>
+            <li><a href="https://www.facebook.com/eastlonecafe/" target="_blank">Facebook</a></li>
+            <li><a href="https://www.instagram.com/eastlonecafe/" target="_blank">Instagram</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 EASTLONE Cafe. All rights reserved.</p>
+        <p>Iligan City, Philippines</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 60));
+    function toggleMenu() { document.getElementById('navLinks').classList.toggle('open'); }
+    const faders = document.querySelectorAll('.fade-in');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.12 });
+    faders.forEach(el => observer.observe(el));
+
+    function handleSubmit(e) {
+      e.preventDefault();
+      const btn = e.target.querySelector('button[type="submit"]');
+      btn.textContent = 'Inquiry Sent! We\'ll be in touch soon.';
+      btn.style.background = '#2a6e3a';
+      btn.disabled = true;
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Visit Us — EASTLONE Cafe · Iligan City</title>
+  <meta name="description" content="Visit EASTLONE Cafe in Purok Santan, Sta. Felomina, Iligan City. Open daily from 2PM. Order via FoodPanda or call +63 960 529 0945." />
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Leaflet.js Map -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <style>
+
+    /* ── PAGE HEADER ── */
+    .visit-page-hero {
+      padding: 130px 0 52px;
+      text-align: center;
+      background:
+        radial-gradient(ellipse 70% 100% at 50% 0%, rgba(255,255,255,0.05) 0%, transparent 65%),
+        var(--black);
+      border-bottom: 1px solid var(--border-sub);
+    }
+
+    .visit-hero-content h1 {
+      font-size: clamp(2.8rem, 5vw, 4.2rem);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+
+    .visit-hero-content p {
+      color: var(--cream-dim);
+      font-size: 0.95rem;
+      max-width: 400px;
+      margin: 0 auto;
+    }
+
+    /* ── MAP SECTION ── */
+    .map-section {
+      background: var(--dark);
+      padding: 0;
+      border-bottom: 1px solid var(--border-sub);
+      position: relative;
+    }
+
+    #map {
+      width: 100%;
+      height: 600px;
+      background: var(--card-bg);
+      display: block;
+    }
+
+    /* Leaflet dark overrides */
+    .leaflet-popup-content-wrapper {
+      background: var(--card-bg) !important;
+      border: 1px solid var(--border) !important;
+      border-radius: var(--radius) !important;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.5) !important;
+      color: var(--cream) !important;
+    }
+    .leaflet-popup-tip { background: var(--card-bg) !important; }
+    .leaflet-popup-content { color: var(--cream) !important; font-family: 'Inter', sans-serif; font-size: 0.88rem; line-height: 1.6; }
+    .leaflet-popup-content strong { color: var(--gold); font-size: 0.95rem; display: block; margin-bottom: 0.3rem; }
+    .leaflet-control-zoom a { background: var(--card-bg) !important; color: var(--cream) !important; border-color: var(--border-sub) !important; }
+    .leaflet-control-zoom a:hover { background: var(--card-hover) !important; color: var(--gold) !important; }
+    .leaflet-control-attribution { background: rgba(8,7,5,0.7) !important; color: var(--cream-dim) !important; font-size: 0.7rem !important; }
+    .leaflet-control-attribution a { color: var(--gold-dim) !important; }
+
+    .map-info-panel {
+      position: absolute;
+      top: 24px;
+      right: 24px;
+      z-index: 800;
+      width: 320px;
+      background: rgba(16, 14, 11, 0.94);
+      backdrop-filter: blur(18px);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1.8rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.4rem;
+      box-shadow: 0 16px 48px rgba(0,0,0,0.6);
+    }
+
+    .map-info-panel h2 {
+      font-size: 1.8rem;
+      margin-bottom: 0.2rem;
+    }
+
+    .map-info-panel .address-text {
+      font-size: 0.88rem;
+      color: var(--cream-dim);
+      line-height: 1.7;
+    }
+
+    .directions-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid var(--border);
+      color: var(--gold);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.65rem 1.2rem;
+      border-radius: 4px;
+      transition: var(--transition);
+      margin-top: 0.5rem;
+      width: fit-content;
+    }
+
+    .directions-btn:hover { background: rgba(255,255,255,0.15); }
+
+    .hours-block h4 {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+
+    .hours-list { list-style: none; display: flex; flex-direction: column; gap: 0; }
+
+    .hours-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.55rem 0;
+      border-bottom: 1px solid var(--border-sub);
+      font-size: 0.88rem;
+    }
+
+    .hours-row:last-child { border-bottom: none; }
+    .hours-row .day { color: var(--cream-dim); }
+    .hours-row .time { color: var(--cream); font-weight: 500; }
+    .hours-row.weekend .day, .hours-row.weekend .time { color: var(--gold); }
+
+    .status-dot {
+      display: inline-block;
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: #4caf50;
+      margin-right: 0.4rem;
+      box-shadow: 0 0 6px rgba(76,175,80,0.6);
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    /* ── CONTACT + ORDER SECTION ── */
+    .contact-order-section {
+      background: var(--black);
+      border-bottom: 1px solid var(--border-sub);
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+
+    /* Delivery card */
+    .delivery-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-sub);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+      transition: var(--transition);
+    }
+
+    .delivery-card:hover { border-color: var(--border); }
+
+    .delivery-card h3 {
+      font-size: 1.6rem;
+      margin-bottom: 0;
+    }
+
+    .delivery-card p {
+      font-size: 0.9rem;
+      color: var(--cream-dim);
+      line-height: 1.7;
+    }
+
+    .fp-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      background: #d70f64;
+      color: #ffffff;
+      border-radius: 4px;
+      padding: 1rem 1.8rem;
+      font-size: 0.9rem;
+      font-weight: 700;
+      font-family: 'Inter', sans-serif;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      transition: var(--transition);
+      border: none;
+      cursor: pointer;
+      width: 100%;
+      justify-content: center;
+    }
+
+    .fp-btn:hover {
+      background: #f01070;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(215,15,100,0.4);
+    }
+
+    .fp-logo-text {
+      font-size: 1.1rem;
+      font-weight: 900;
+      font-style: italic;
+      letter-spacing: -0.02em;
+    }
+
+    .fp-divider {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      font-size: 0.75rem;
+      color: var(--cream-dim);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .fp-divider::before, .fp-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border-sub);
+    }
+
+    .service-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .service-pill {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--border);
+      color: var(--cream-dim);
+      font-size: 0.78rem;
+      font-weight: 500;
+      padding: 0.35rem 0.9rem;
+      border-radius: 50px;
+    }
+
+    /* Contact info column */
+    .contact-info-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .info-tile {
+      background: var(--card-bg);
+      border: 1px solid var(--border-sub);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem 1.8rem;
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      transition: var(--transition);
+    }
+
+    .info-tile:hover { border-color: var(--border); }
+
+    .info-tile a { transition: color var(--transition); }
+    .info-tile a:hover { color: var(--gold); }
+
+    .tile-icon {
+      width: 44px; height: 44px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.07);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem; flex-shrink: 0;
+    }
+
+    .tile-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.2rem;
+    }
+
+    .tile-value {
+      font-size: 0.92rem;
+      color: var(--cream);
+    }
+
+    /* ── SOCIAL SECTION ── */
+    .social-section {
+      background: var(--dark);
+      border-bottom: 1px solid var(--border-sub);
+      text-align: center;
+    }
+
+    .social-row {
+      display: flex;
+      gap: 1.5rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 3rem;
+    }
+
+    .social-pill {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      background: var(--card-bg);
+      border: 1px solid var(--border-sub);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem 2rem;
+      min-width: 240px;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .social-pill::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity var(--transition);
+    }
+
+    .social-pill.fb::before  { background: linear-gradient(135deg, rgba(24,119,242,0.12), transparent); }
+    .social-pill.ig::before  { background: linear-gradient(135deg, rgba(225,48,108,0.12), transparent); }
+    .social-pill.fp::before  { background: linear-gradient(135deg, rgba(215,15,100,0.12), transparent); }
+    .social-pill.ph::before  { background: linear-gradient(135deg, rgba(255,255,255,0.07), transparent); }
+
+    .social-pill:hover { transform: translateY(-4px); border-color: var(--border); }
+    .social-pill:hover::before { opacity: 1; }
+
+    .social-icon-wrap {
+      width: 44px; height: 44px;
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem; flex-shrink: 0; position: relative; z-index: 1;
+    }
+
+    .social-icon-wrap.fb  { background: rgba(24,119,242,0.15); }
+    .social-icon-wrap.ig  { background: rgba(225,48,108,0.15); }
+    .social-icon-wrap.fp  { background: rgba(215,15,100,0.15); }
+    .social-icon-wrap.ph  { background: rgba(255,255,255,0.08); }
+
+    .social-pill-text { position: relative; z-index: 1; text-align: left; }
+    .social-pill-text strong { display: block; font-family: 'Inter', sans-serif; font-size: 0.95rem; font-weight: 600; color: var(--white); margin-bottom: 0.15rem; }
+    .social-pill-text span { font-size: 0.8rem; color: var(--cream-dim); }
+
+    /* ── VISIT STRIP ── */
+    .visit-strip {
+      background: var(--black);
+      padding: 100px 0;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .visit-strip::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at center, rgba(255,255,255,0.04), transparent 65%);
+    }
+
+    .visit-strip-inner { position: relative; z-index: 1; }
+    .visit-strip h2 { font-size: clamp(3rem, 6vw, 5.5rem); margin-bottom: 0.8rem; }
+    .visit-strip .tagline {
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.8rem;
+      color: var(--gold);
+      margin-bottom: 2rem;
+    }
+
+    @media (max-width: 960px) {
+      #map { height: 480px; }
+      .map-info-panel {
+        position: static;
+        width: 100%;
+        border-radius: 0;
+        border-left: none;
+        border-right: none;
+        border-top: 1px solid var(--border);
+        backdrop-filter: none;
+        background: var(--card-bg);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .contact-grid { grid-template-columns: 1fr; }
+      .visit-page-hero { height: 280px; }
+      .social-pill { min-width: calc(50% - 0.75rem); }
+    }
+
+    @media (max-width: 480px) {
+      .social-pill { min-width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVIGATION -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <img src="images/logo.svg" alt="EASTLONE Cafe" onerror="this.src='images/logo.jpg'" />
+      </a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="menu.html">Menu</a></li>
+        <li><a href="experience.html">Experience</a></li>
+        <li><a href="events.html">Events</a></li>
+        <li><a href="contact.html" class="nav-cta active">Visit Us</a></li>
+      </ul>
+      <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ══ PAGE HEADER ══ -->
+  <div class="visit-page-hero">
+    <div class="visit-hero-content">
+      <p class="section-label">Come Find Us</p>
+      <h1>Visit EASTLONE Cafe</h1>
+      <div class="gold-rule center"></div>
+      <p>Drop by, order in, or reach out — we're always happy to have you.</p>
+    </div>
+  </div>
+
+  <!-- ══ MAP ══ -->
+  <div class="map-section">
+    <div id="map"></div>
+
+    <div class="map-info-panel">
+        <div>
+          <p class="section-label">Our Location</p>
+          <h2>Find Us Here</h2>
+          <div class="gold-rule"></div>
+          <p class="address-text">
+            Purok Santan, Sta. Felomina<br />
+            Iligan City, Lanao del Norte<br />
+            Philippines
+          </p>
+          <a href="https://www.google.com/maps/search/Eastlone+Cafe+Iligan+City" target="_blank" class="directions-btn">
+            ↗ Get Directions
+          </a>
+        </div>
+
+        <div class="hours-block">
+          <h4>
+            <span class="status-dot" id="statusDot"></span>
+            <span id="statusText">Opening Hours</span>
+          </h4>
+          <ul class="hours-list">
+            <li class="hours-row"><span class="day">Monday</span><span class="time">2:00 PM – 10:00 PM</span></li>
+            <li class="hours-row"><span class="day">Tuesday</span><span class="time">2:00 PM – 10:00 PM</span></li>
+            <li class="hours-row"><span class="day">Wednesday</span><span class="time">2:00 PM – 10:00 PM</span></li>
+            <li class="hours-row"><span class="day">Thursday</span><span class="time">2:00 PM – 10:00 PM</span></li>
+            <li class="hours-row weekend"><span class="day">Friday</span><span class="time">2:00 PM – 12:00 AM</span></li>
+            <li class="hours-row weekend"><span class="day">Saturday</span><span class="time">2:00 PM – 12:00 AM</span></li>
+            <li class="hours-row weekend"><span class="day">Sunday</span><span class="time">2:00 PM – 12:00 AM</span></li>
+          </ul>
+        </div>
+
+        <div>
+          <a href="tel:+639605290945" class="btn btn-outline" style="width:100%; justify-content:center; font-size:0.8rem;">
+            📞 &nbsp; +63 960 529 0945
+          </a>
+        </div>
+      </div>
+  </div>
+
+  <!-- ══ CONTACT + ORDER ══ -->
+  <section class="contact-order-section">
+    <div class="container">
+      <div class="text-center mb-4 fade-in">
+        <p class="section-label">How to Reach Us</p>
+        <h2 class="section-heading">Order, Call, or Come In</h2>
+        <div class="gold-rule center"></div>
+      </div>
+
+      <div class="contact-grid fade-in">
+
+        <!-- DELIVERY CARD -->
+        <div class="delivery-card">
+          <div>
+            <p class="section-label" style="margin-bottom:0.4rem;">Order for Delivery</p>
+            <h3>Delivered to<br />Your Door</h3>
+          </div>
+          <p>
+            Can't make it today? Order your EASTLONE favorites through FoodPanda and we'll bring the café experience straight to you.
+          </p>
+
+          <div class="service-pills">
+            <span class="service-pill">🍽️ Dine-In</span>
+            <span class="service-pill">🛍️ Takeaway</span>
+            <span class="service-pill">🚗 Drive-Through</span>
+            <span class="service-pill">🛵 Delivery</span>
+          </div>
+
+          <div class="fp-divider">Order Online</div>
+
+          <a href="https://www.foodpanda.ph/restaurant/t766/eastlone-cafe-butuan-cagayan-de-oro-iligan-road" target="_blank" class="fp-btn">
+            <svg width="22" height="22" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="20" cy="20" r="20" fill="white" fill-opacity="0.15"/>
+              <path d="M20 8C13.37 8 8 13.37 8 20s5.37 12 12 12 12-5.37 12-12S26.63 8 20 8zm0 21.6c-5.3 0-9.6-4.3-9.6-9.6S14.7 10.4 20 10.4 29.6 14.7 29.6 20 25.3 29.6 20 29.6zm0-14.4a4.8 4.8 0 100 9.6 4.8 4.8 0 000-9.6z" fill="white"/>
+            </svg>
+            <span class="fp-logo-text">foodpanda</span>
+            — Order Now
+          </a>
+        </div>
+
+        <!-- CONTACT INFO -->
+        <div class="contact-info-stack">
+          <div class="info-tile">
+            <div class="tile-icon">📍</div>
+            <div>
+              <p class="tile-label">Address</p>
+              <p class="tile-value">Purok Santan, Sta. Felomina<br />Iligan City, Lanao del Norte</p>
+            </div>
+          </div>
+          <div class="info-tile">
+            <div class="tile-icon">📞</div>
+            <div>
+              <p class="tile-label">Phone</p>
+              <a href="tel:+639605290945" class="tile-value">+63 960 529 0945</a>
+            </div>
+          </div>
+          <div class="info-tile">
+            <div class="tile-icon">🕐</div>
+            <div>
+              <p class="tile-label">Weekdays</p>
+              <p class="tile-value">Monday – Thursday · 2PM to 10PM</p>
+            </div>
+          </div>
+          <div class="info-tile">
+            <div class="tile-icon">🌙</div>
+            <div>
+              <p class="tile-label">Weekends</p>
+              <p class="tile-value">Friday – Sunday · 2PM to 12AM</p>
+            </div>
+          </div>
+          <div class="info-tile">
+            <a href="https://www.facebook.com/eastlonecafe/" target="_blank" style="display:flex; align-items:center; gap:1.2rem; width:100%;">
+              <div class="tile-icon" style="background:rgba(24,119,242,0.15);">📘</div>
+              <div>
+                <p class="tile-label">Facebook</p>
+                <p class="tile-value">@eastlonecafe</p>
+              </div>
+            </a>
+          </div>
+          <div class="info-tile">
+            <a href="https://www.instagram.com/eastlonecafe/" target="_blank" style="display:flex; align-items:center; gap:1.2rem; width:100%;">
+              <div class="tile-icon" style="background:rgba(225,48,108,0.15);">📸</div>
+              <div>
+                <p class="tile-label">Instagram</p>
+                <p class="tile-value">@eastlonecafe</p>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ SOCIALS ══ -->
+  <section class="social-section">
+    <div class="container">
+      <div class="fade-in">
+        <p class="section-label">Stay Connected</p>
+        <h2 class="section-heading">Follow &amp; Order</h2>
+        <div class="gold-rule center"></div>
+        <p style="color:var(--cream-dim);">
+          New drinks, promos, and café updates — stay in the loop.
+        </p>
+      </div>
+      <div class="social-row fade-in">
+        <a href="https://www.facebook.com/eastlonecafe/" target="_blank" class="social-pill fb">
+          <div class="social-icon-wrap fb">📘</div>
+          <div class="social-pill-text">
+            <strong>Facebook</strong>
+            <span>@eastlonecafe</span>
+          </div>
+        </a>
+        <a href="https://www.instagram.com/eastlonecafe/" target="_blank" class="social-pill ig">
+          <div class="social-icon-wrap ig">📸</div>
+          <div class="social-pill-text">
+            <strong>Instagram</strong>
+            <span>@eastlonecafe</span>
+          </div>
+        </a>
+        <a href="https://www.foodpanda.ph/restaurant/t766/eastlone-cafe-butuan-cagayan-de-oro-iligan-road" target="_blank" class="social-pill fp">
+          <div class="social-icon-wrap fp">🛵</div>
+          <div class="social-pill-text">
+            <strong>FoodPanda</strong>
+            <span>Order for Delivery</span>
+          </div>
+        </a>
+        <a href="tel:+639605290945" class="social-pill ph">
+          <div class="social-icon-wrap ph">📞</div>
+          <div class="social-pill-text">
+            <strong>Call Us</strong>
+            <span>+63 960 529 0945</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ CLOSING CTA ══ -->
+  <section class="visit-strip">
+    <div class="container visit-strip-inner fade-in">
+      <p class="section-label">See You Soon</p>
+      <h2>Your Next Cup<br />Is Waiting</h2>
+      <p class="tagline">Come by for a cup, stay for the vibe.</p>
+      <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;">
+        <a href="menu.html" class="btn btn-primary">See Menu</a>
+        <a href="events.html" class="btn btn-outline">Book Mobile Bar</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ FOOTER ══ -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <img src="images/logo.svg" alt="EASTLONE Cafe" onerror="this.src='images/logo.jpg'" />
+          <p>Your cozy coffee retreat in Iligan City — serving handcrafted drinks, comforting vibes, and a space to slow down, sip, and stay awhile.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Navigate</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="menu.html">Menu</a></li>
+            <li><a href="experience.html">Experience</a></li>
+            <li><a href="events.html">Events</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Hours</h4>
+          <ul>
+            <li><a>Mon – Thu: 2PM – 10PM</a></li>
+            <li><a>Fri – Sun: 2PM – 12AM</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Find Us</h4>
+          <ul>
+            <li><a>Purok Santan, Sta. Felomina</a></li>
+            <li><a>Iligan City, Lanao del Norte</a></li>
+            <li><a href="tel:+639605290945">+63 960 529 0945</a></li>
+            <li><a href="https://www.facebook.com/eastlonecafe/" target="_blank">Facebook</a></li>
+            <li><a href="https://www.instagram.com/eastlonecafe/" target="_blank">Instagram</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 EASTLONE Cafe. All rights reserved.</p>
+        <p>Iligan City, Philippines</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ── Nav ──
+    const navbar = document.getElementById('navbar');
+    navbar.classList.add('scrolled'); // always solid on contact page (hero is short)
+    window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 10));
+    function toggleMenu() { document.getElementById('navLinks').classList.toggle('open'); }
+
+    // ── Scroll fade ──
+    const faders = document.querySelectorAll('.fade-in');
+    new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 }).observe(...(faders.length ? faders : [document.body]));
+    faders.forEach(el => new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 }).observe(el));
+
+    // ── Live open/closed status ──
+    (function updateStatus() {
+      const now = new Date();
+      // Convert to Philippines Time (UTC+8)
+      const phOffset = 8 * 60;
+      const utc = now.getTime() + now.getTimezoneOffset() * 60000;
+      const ph = new Date(utc + phOffset * 60000);
+      const day = ph.getDay(); // 0=Sun, 1=Mon … 6=Sat
+      const h = ph.getHours();
+      const m = ph.getMinutes();
+      const mins = h * 60 + m;
+
+      // Mon–Thu: 14:00–22:00 | Fri–Sun: 14:00–24:00
+      const open = 14 * 60;
+      const closeWeekday = 22 * 60;
+      const closeWeekend = 24 * 60;
+      const isWeekend = (day === 5 || day === 6 || day === 0);
+      const closeTime = isWeekend ? closeWeekend : closeWeekday;
+      const isOpen = mins >= open && mins < closeTime;
+
+      const dot = document.getElementById('statusDot');
+      const txt = document.getElementById('statusText');
+      if (dot && txt) {
+        dot.style.background = isOpen ? '#4caf50' : '#e53935';
+        dot.style.boxShadow = isOpen ? '0 0 6px rgba(76,175,80,0.7)' : '0 0 6px rgba(229,57,53,0.7)';
+        txt.textContent = isOpen ? 'Open Now' : 'Currently Closed';
+      }
+    })();
+
+    // ── Leaflet Map ──
+    const LAT = 8.2356;
+    const LNG = 124.2512;
+
+    const map = L.map('map', {
+      center: [LAT, LNG],
+      zoom: 16,
+      zoomControl: false,   // re-added below on bottom-left
+      scrollWheelZoom: false,
+      attributionControl: false,   // remove default bottom-right attribution
+    });
+
+    // Zoom controls on bottom-left
+    L.control.zoom({ position: 'bottomleft' }).addTo(map);
+
+    // Re-add attribution on the bottom-LEFT, away from the info panel
+    L.control.attribution({ position: 'bottomleft', prefix: false })
+      .addAttribution('© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> © <a href="https://carto.com/">CARTO</a>')
+      .addTo(map);
+
+    // CartoDB Dark Matter tiles — free, no API key
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/">CARTO</a>',
+      subdomains: 'abcd',
+      maxZoom: 20
+    }).addTo(map);
+
+    // Custom gold marker
+    const goldIcon = L.divIcon({
+      className: '',
+      html: `
+        <div style="
+          position:relative;
+          width:42px; height:52px;
+        ">
+          <div style="
+            position:absolute; top:0; left:50%; transform:translateX(-50%);
+            width:42px; height:42px; border-radius:50% 50% 50% 0;
+            transform:translateX(-50%) rotate(-45deg);
+            background:linear-gradient(135deg,#ffffff,#e8e8e8);
+            box-shadow:0 4px 18px rgba(255,255,255,0.4);
+            display:flex; align-items:center; justify-content:center;
+          ">
+            <span style="
+              transform:rotate(45deg);
+              font-size:18px;
+              line-height:1;
+              position:absolute;
+              top:50%; left:50%;
+              transform:translate(-50%,-50%) rotate(45deg);
+            ">☕</span>
+          </div>
+        </div>`,
+      iconSize: [42, 52],
+      iconAnchor: [21, 52],
+      popupAnchor: [0, -54]
+    });
+
+    L.marker([LAT, LNG], { icon: goldIcon })
+      .addTo(map)
+      .bindPopup(`
+        <strong>EASTLONE Cafe</strong>
+        Purok Santan, Sta. Felomina<br />
+        Iligan City, Lanao del Norte<br /><br />
+        <a href="https://www.google.com/maps/search/Eastlone+Cafe+Iligan+City" target="_blank"
+           style="color:#ffffff; font-weight:600; font-size:0.82rem;">
+          ↗ Open in Google Maps
+        </a>
+      `, { maxWidth: 220 })
+      .openPopup();
+
+    // Disable map drag on mobile to avoid scroll conflicts
+    if (window.innerWidth <= 768) map.dragging.disable();
+  </script>
+</body>
+</html>

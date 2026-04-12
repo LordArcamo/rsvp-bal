@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About — EASTLONE Cafe</title>
+  <meta name="description" content="Learn about EASTLONE Cafe — a cozy coffee shop in Iligan City created for people who want more than a quick caffeine fix." />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ABOUT-SPECIFIC */
+    .about-body {
+      background: var(--dark);
+      border-bottom: 1px solid var(--border-sub);
+    }
+
+    .about-lead {
+      font-size: 1.15rem;
+      color: var(--cream);
+      line-height: 1.85;
+      margin-bottom: 1.5rem;
+    }
+
+    .about-body p {
+      color: var(--cream-dim);
+      font-size: 1rem;
+      line-height: 1.85;
+      margin-bottom: 1.2rem;
+    }
+
+    .about-aside {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .mission-card {
+      background: linear-gradient(135deg, rgba(255,255,255,0.07), rgba(255,255,255,0.03));
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+    }
+
+    .mission-card .label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.8rem;
+    }
+
+    .mission-card p {
+      font-size: 1rem;
+      color: var(--cream);
+      font-style: italic;
+      line-height: 1.7;
+    }
+
+    .brand-words {
+      background: var(--card-bg);
+      border: 1px solid var(--border-sub);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+    }
+
+    .brand-words .label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.2rem;
+    }
+
+    .word-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+    }
+
+    .word-tag {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--border);
+      color: var(--cream);
+      font-size: 0.88rem;
+      font-weight: 500;
+      padding: 0.45rem 1rem;
+      border-radius: 50px;
+    }
+
+    .quote-strip {
+      background: var(--black);
+      padding: 80px 0;
+      text-align: center;
+      border-bottom: 1px solid var(--border-sub);
+    }
+
+    .quote-strip blockquote {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: clamp(1.5rem, 3vw, 2.2rem);
+      color: var(--cream);
+      max-width: 720px;
+      margin: 0 auto 1.2rem;
+      line-height: 1.5;
+    }
+
+    .quote-strip cite {
+      font-size: 0.85rem;
+      color: var(--gold);
+      letter-spacing: 0.1em;
+      font-style: normal;
+    }
+
+    .values-section {
+      background: var(--dark);
+      border-bottom: 1px solid var(--border-sub);
+    }
+
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+
+    .value-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-sub);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      transition: var(--transition);
+    }
+
+    .value-card:hover {
+      border-color: var(--border);
+      transform: translateY(-4px);
+    }
+
+    .value-card .num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      color: rgba(255,255,255,0.15);
+      font-weight: 700;
+      line-height: 1;
+      margin-bottom: 0.6rem;
+    }
+
+    .value-card h3 {
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .value-card p {
+      font-size: 0.9rem;
+      color: var(--cream-dim);
+    }
+
+    @media (max-width: 768px) {
+      .values-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVIGATION -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <img src="images/logo.svg" alt="EASTLONE Cafe" onerror="this.src='images/logo.jpg'" />
+      </a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html" class="active">About</a></li>
+        <li><a href="menu.html">Menu</a></li>
+        <li><a href="experience.html">Experience</a></li>
+        <li><a href="events.html">Events</a></li>
+        <li><a href="contact.html" class="nav-cta">Visit Us</a></li>
+      </ul>
+      <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <div class="page-hero">
+    <div class="container">
+      <p class="section-label">Our Story</p>
+      <h1>About EASTLONE Cafe</h1>
+      <div class="gold-rule center"></div>
+      <p>A cozy coffee shop built for people who want more than a quick caffeine fix.</p>
+    </div>
+  </div>
+
+  <!-- ABOUT BODY -->
+  <section class="about-body">
+    <div class="container">
+      <div class="grid-2">
+        <div class="fade-in">
+          <p class="about-lead">
+            EASTLONE Cafe is a cozy coffee shop in Iligan City created for people who want more than a quick caffeine fix. It is a place to unwind, connect, create, and enjoy thoughtfully prepared drinks in a calm and welcoming setting.
+          </p>
+          <p>
+            Located in Purok Santan, Sta. Felomina, the café has quickly built a reputation for its warm atmosphere, quality coffee, and approachable service. Customers describe it as a hidden gem, a relaxing roadside café, and a comfortable place for dates, quiet time, or remote work.
+          </p>
+          <p>
+            At EASTLONE Cafe, every cup is meant to make people feel at home. Whether you are stopping in for your favorite latte, meeting friends, or simply taking a break from the day, the goal is simple: serve good coffee in a space that feels good to be in.
+          </p>
+        </div>
+        <!-- Real café photo above the aside cards -->
+        <div class="about-aside fade-in">
+          <div style="border-radius:var(--radius-lg); overflow:hidden; aspect-ratio:16/9; margin-bottom:0;">
+            <img src="images/cafe-open-night.jpg" alt="EASTLONE Cafe at night"
+                 style="width:100%;height:100%;object-fit:cover;" loading="lazy" />
+          </div>
+          <div class="mission-card">
+            <p class="label">Our Mission</p>
+            <p>
+              "To serve comforting drinks and create a cozy café experience where people can slow down, connect, and enjoy every visit."
+            </p>
+          </div>
+          <div class="brand-words">
+            <p class="label">Our Identity</p>
+            <div class="word-tags">
+              <span class="word-tag">Cozy</span>
+              <span class="word-tag">Rustic</span>
+              <span class="word-tag">Calm</span>
+              <span class="word-tag">Welcoming</span>
+              <span class="word-tag">Flavorful</span>
+              <span class="word-tag">Community-Driven</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUOTE -->
+  <div class="quote-strip fade-in">
+    <div class="container">
+      <blockquote>
+        "Coffee is more than a drink — it's a pause, a reset, and a reason to gather."
+      </blockquote>
+      <cite>— EASTLONE Cafe</cite>
+    </div>
+  </div>
+
+  <!-- VALUES -->
+  <section class="values-section">
+    <div class="container">
+      <div class="text-center fade-in">
+        <p class="section-label">What Drives Us</p>
+        <h2>The Pillars of EASTLONE</h2>
+        <div class="gold-rule center"></div>
+      </div>
+      <div class="values-grid fade-in">
+        <div class="value-card">
+          <div class="num">01</div>
+          <h3>Quality in Every Cup</h3>
+          <p>Every drink is handcrafted with care — from the espresso pull to the final pour. No shortcuts, just good coffee.</p>
+        </div>
+        <div class="value-card">
+          <div class="num">02</div>
+          <h3>A Space That Feels Like Home</h3>
+          <p>Warm interiors, calm energy, and a layout designed for comfort — whether you're here for 30 minutes or 3 hours.</p>
+        </div>
+        <div class="value-card">
+          <div class="num">03</div>
+          <h3>Community First</h3>
+          <p>EASTLONE is a gathering place for Iligan — built to support connections, creativity, and everyday moments worth sharing.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section style="background: var(--black); text-align:center; border-top: 1px solid var(--border-sub);">
+    <div class="container fade-in">
+      <p class="section-label">Come Say Hello</p>
+      <h2 style="font-size:2.4rem; margin-bottom:1rem;">Ready to Experience It?</h2>
+      <div class="gold-rule center"></div>
+      <p style="color:var(--cream-dim); margin-bottom:2rem; max-width:480px; margin-left:auto; margin-right:auto;">Drop by anytime from 2PM onwards. We'll have a cup ready for you.</p>
+      <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;">
+        <a href="menu.html" class="btn btn-primary">View Menu</a>
+        <a href="contact.html" class="btn btn-outline">Get Directions</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <img src="images/logo.svg" alt="EASTLONE Cafe" onerror="this.src='images/logo.jpg'" />
+          <p>EASTLONE Cafe is your cozy coffee retreat in Iligan City — serving handcrafted drinks, comforting vibes, and a space to slow down, sip, and stay awhile.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Navigate</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="menu.html">Menu</a></li>
+            <li><a href="experience.html">Experience</a></li>
+            <li><a href="events.html">Events</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Hours</h4>
+          <ul>
+            <li><a>Mon – Thu: 2PM – 10PM</a></li>
+            <li><a>Fri – Sun: 2PM – 12AM</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Find Us</h4>
+          <ul>
+            <li><a>Purok Santan, Sta. Felomina</a></li>
+            <li><a>Iligan City, Lanao del Norte</a></li>
+            <li><a href="tel:+639605290945">+63 960 529 0945</a></li>
+            <li><a href="https://www.facebook.com/eastlonecafe/" target="_blank">Facebook</a></li>
+            <li><a href="https://www.instagram.com/eastlonecafe/" target="_blank">Instagram</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 EASTLONE Cafe. All rights reserved.</p>
+        <p>Iligan City, Philippines</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 60));
+    function toggleMenu() { document.getElementById('navLinks').classList.toggle('open'); }
+    const faders = document.querySelectorAll('.fade-in');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.12 });
+    faders.forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>

@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Menu — EASTLONE Cafe</title>
+  <meta name="description" content="Handcrafted drinks, café favorites, and cozy sips for every kind of day at EASTLONE Cafe, Iligan City." />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* MENU-SPECIFIC */
+    .menu-section {
+      background: var(--dark);
+    }
+
+    .menu-category {
+      margin-bottom: 5rem;
+    }
+
+    .menu-category:last-child {
+      margin-bottom: 0;
+    }
+
+    .category-header {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .category-header h2 {
+      font-size: 1.8rem;
+      white-space: nowrap;
+    }
+
+    .category-line {
+      flex: 1;
+      height: 1px;
+      background: var(--border-sub);
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .menu-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border-sub);
+      border-radius: var(--radius-lg);
+      padding: 1.8rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .menu-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--gold), transparent);
+      opacity: 0;
+      transition: opacity var(--transition);
+    }
+
+    .menu-item:hover {
+      background: var(--card-hover);
+      border-color: var(--border);
+      transform: translateY(-4px);
+    }
+
+    .menu-item:hover::before {
+      opacity: 1;
+    }
+
+    .menu-item-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .item-icon {
+      font-size: 2rem;
+      line-height: 1;
+    }
+
+    .item-badge {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      background: rgba(255,255,255,0.08);
+      color: var(--gold);
+      padding: 0.2rem 0.6rem;
+      border-radius: 50px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .menu-item h3 {
+      font-size: 1.1rem;
+      margin-top: 0.5rem;
+    }
+
+    .menu-item p {
+      font-size: 0.88rem;
+      color: var(--cream-dim);
+      line-height: 1.6;
+      flex: 1;
+    }
+
+    /* Food items - 2 col */
+    .menu-grid-2 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .menu-note-box {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem 2rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-top: 3rem;
+    }
+
+    .menu-note-box .note-icon {
+      font-size: 1.4rem;
+      flex-shrink: 0;
+      margin-top: 0.1rem;
+    }
+
+    .menu-note-box p {
+      font-size: 0.9rem;
+      color: var(--cream-dim);
+      line-height: 1.7;
+    }
+
+    .menu-note-box strong {
+      color: var(--gold);
+    }
+
+    /* Tea sub-variants */
+    .tea-variants {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-top: 0.5rem;
+    }
+
+    .tea-variant {
+      font-size: 0.76rem;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border-sub);
+      border-radius: 50px;
+      padding: 0.2rem 0.65rem;
+      color: var(--cream-dim);
+    }
+
+    @media (max-width: 900px) {
+      .menu-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 600px) {
+      .menu-grid { grid-template-columns: 1fr; }
+      .menu-grid-2 { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVIGATION -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <img src="images/logo.svg" alt="EASTLONE Cafe" onerror="this.src='images/logo.jpg'" />
+      </a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="menu.html" class="active">Menu</a></li>
+        <li><a href="experience.html">Experience</a></li>
+        <li><a href="events.html">Events</a></li>
+        <li><a href="contact.html" class="nav-cta">Visit Us</a></li>
+      </ul>
+      <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <div class="page-hero">
+    <div class="container">
+      <p class="section-label">What We Serve</p>
+      <h1>Our Menu</h1>
+      <div class="gold-rule center"></div>
+      <p>Handcrafted drinks, café favorites, and cozy sips for every kind of day.</p>
+    </div>
+  </div>
+
+  <!-- MENU -->
+  <section class="menu-section">
+    <div class="container">
+
+      <!-- COFFEE FAVORITES -->
+      <div class="menu-category fade-in">
+        <div class="category-header">
+          <h2>☕ Coffee Favorites</h2>
+          <div class="category-line"></div>
+        </div>
+        <div class="menu-grid">
+          <div class="menu-item">
+            <div class="menu-item-top">
+              <div class="item-icon">☕</div>
+              <span class="item-badge">House Fave</span>
+            </div>
+            <h3>Spanish Latte</h3>
+            <p>Smooth espresso balanced with a sweet, creamy finish. A timeless café classic loved by regulars.</p>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-top">
+              <div class="item-icon">🥛</div>
+              <span class="item-badge">Signature</span>
+            </div>
+            <h3>White Mocha</h3>
+            <p>A smooth, subtly sweet espresso drink made with rich white chocolate — warm and comforting.</p>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-top">
+              <div class="item-icon">🌾</div>
+              <span class="item-badge">Must-Try</span>
+            </div>
+            <h3>Dirty Horchata</h3>
+            <p>A standout house favorite with a rich, comforting twist — creamy, spiced, and uniquely EASTLONE.</p>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-top">
+              <div class="item-icon">🥚</div>
+              <span class="item-badge">New</span>
+            </div>
+            <h3>Vietnamese Egg Coffee</h3>
+            <p>Bold espresso topped with velvety whipped egg yolk cream. Uniquely indulgent and unforgettable.</p>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-top">
+              <div class="item-icon">🖤</div>
+            </div>
+            <h3>Americano</h3>
+            <p>Bold, clean, and pure — our Americano is the go-to for the espresso purist who keeps it simple.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- NON-COFFEE -->
+      <div class="menu-category fade-in">
+        <div class="category-header">
+          <h2>🍵 Non-Coffee &amp; Other Drinks</h2>
+          <div class="category-line"></div>
+        </div>
+        <div class="menu-grid">
+          <div class="menu-item">
+            <div class="menu-item-top">
+              <div class="item-icon">🍵</div>
+              <span class="item-badge">Non-Coffee</span>
+            </div>
+            <h3>Matcha Latte</h3>
+            <p>Earthy ceremonial matcha blended into a smooth and comforting creamy latte — a crowd pleaser.</p>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-top">
+              <div class="item-icon">🫖</div>
+              <span class="item-badge">Non-Coffee</span>
+            </div>
+            <h3>Black Trail Tea</h3>
+            <p>Refreshing tea blends served in signature fruit flavors — perfect for a lighter, fruity sip.</p>
+            <div class="tea-variants">
+              <span class="tea-variant">Green Apple</span>
+              <span class="tea-variant">Passion Fruit</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FOOD & LIGHT BITES -->
+      <div class="menu-category fade-in">
+        <div class="category-header">
+          <h2>🍞 Food &amp; Light Bites</h2>
+          <div class="category-line"></div>
+        </div>
+        <div class="menu-grid menu-grid-2">
+          <div class="menu-item">
+            <div class="menu-item-top">
+              <div class="item-icon">🥐</div>
+            </div>
+            <h3>Pastries</h3>
+            <p>Fresh-baked pastries that pair perfectly with your favorite coffee or tea. Great for a light snack.</p>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-top">
+              <div class="item-icon">🧀</div>
+            </div>
+            <h3>Baked Mac</h3>
+            <p>A warm, cheesy comfort dish — perfect for pairing with your afternoon coffee or evening sip.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- MENU NOTE -->
+      <div class="menu-note-box fade-in">
+        <div class="note-icon">📋</div>
+        <p>
+          <strong>Menu Note:</strong> Menu items may vary by availability. Visit our café or follow our social pages for the latest offerings and seasonal specials. Some items may be limited or introduced as new additions — ask our staff for today's highlights.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section style="background: var(--black); text-align:center; border-top: 1px solid var(--border-sub);">
+    <div class="container fade-in">
+      <p style="font-family:'Dancing Script',cursive; font-size:1.8rem; color:var(--gold-light); margin-bottom:1rem;">Come by for a cup, stay for the vibe.</p>
+      <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;">
+        <a href="contact.html" class="btn btn-primary">Find Us</a>
+        <a href="events.html" class="btn btn-outline">Book Mobile Bar</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <img src="images/logo.svg" alt="EASTLONE Cafe" onerror="this.src='images/logo.jpg'" />
+          <p>EASTLONE Cafe is your cozy coffee retreat in Iligan City — serving handcrafted drinks, comforting vibes, and a space to slow down, sip, and stay awhile.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Navigate</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="menu.html">Menu</a></li>
+            <li><a href="experience.html">Experience</a></li>
+            <li><a href="events.html">Events</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Hours</h4>
+          <ul>
+            <li><a>Mon – Thu: 2PM – 10PM</a></li>
+            <li><a>Fri – Sun: 2PM – 12AM</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Find Us</h4>
+          <ul>
+            <li><a>Purok Santan, Sta. Felomina</a></li>
+            <li><a>Iligan City, Lanao del Norte</a></li>
+            <li><a href="tel:+639605290945">+63 960 529 0945</a></li>
+            <li><a href="https://www.facebook.com/eastlonecafe/" target="_blank">Facebook</a></li>
+            <li><a href="https://www.instagram.com/eastlonecafe/" target="_blank">Instagram</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 EASTLONE Cafe. All rights reserved.</p>
+        <p>Iligan City, Philippines</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 60));
+    function toggleMenu() { document.getElementById('navLinks').classList.toggle('open'); }
+    const faders = document.querySelectorAll('.fade-in');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.12 });
+    faders.forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>

@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Why Visit Us — EASTLONE Cafe</title>
+  <meta name="description" content="Discover why people love EASTLONE Cafe — cozy atmosphere, signature drinks, and a community space in Iligan City." />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* EXPERIENCE-SPECIFIC */
+    .exp-intro {
+      background: var(--dark);
+      border-bottom: 1px solid var(--border-sub);
+    }
+
+    .exp-intro-text {
+      font-size: 1.1rem;
+      color: var(--cream-dim);
+      line-height: 1.85;
+      max-width: 700px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    /* FEATURES */
+    .features-section {
+      background: var(--black);
+    }
+
+    .feature-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      padding: 4rem 0;
+      border-bottom: 1px solid var(--border-sub);
+    }
+
+    .feature-row:last-child {
+      border-bottom: none;
+    }
+
+    .feature-row.reverse .feature-text {
+      order: 2;
+    }
+
+    .feature-row.reverse .feature-visual {
+      order: 1;
+    }
+
+    .feature-eyebrow {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.8rem;
+    }
+
+    .feature-text h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .feature-text p {
+      font-size: 1rem;
+      color: var(--cream-dim);
+      line-height: 1.8;
+    }
+
+    .feature-visual {
+      background: var(--card-bg);
+      border: 1px solid var(--border-sub);
+      border-radius: var(--radius-lg);
+      aspect-ratio: 4/3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 0.8rem;
+      padding: 2rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-visual::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center, rgba(255,255,255,0.05), transparent 70%);
+    }
+
+    .feature-visual .big-emoji {
+      font-size: 4rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .feature-visual p {
+      color: var(--cream-dim);
+      font-size: 0.9rem;
+      position: relative;
+      z-index: 1;
+      max-width: 220px;
+    }
+
+    /* USE CASES */
+    .use-cases {
+      background: var(--dark);
+      border-top: 1px solid var(--border-sub);
+    }
+
+    .use-case-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+
+    .use-case-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-sub);
+      border-radius: var(--radius-lg);
+      padding: 1.8rem;
+      text-align: center;
+      transition: var(--transition);
+    }
+
+    .use-case-card:hover {
+      border-color: var(--border);
+      transform: translateY(-4px);
+    }
+
+    .use-case-card .uc-icon {
+      font-size: 2.2rem;
+      margin-bottom: 0.9rem;
+    }
+
+    .use-case-card h3 {
+      font-size: 1rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .use-case-card p {
+      font-size: 0.84rem;
+      color: var(--cream-dim);
+    }
+
+    /* TESTIMONIAL STRIP */
+    .testimonials {
+      background: var(--black);
+      border-top: 1px solid var(--border-sub);
+      text-align: center;
+    }
+
+    .testimonial-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+
+    .testi-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-sub);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      text-align: left;
+    }
+
+    .testi-card .stars {
+      color: var(--gold);
+      font-size: 1rem;
+      letter-spacing: 0.1em;
+      margin-bottom: 0.8rem;
+    }
+
+    .testi-card p {
+      font-size: 0.92rem;
+      color: var(--cream-dim);
+      font-style: italic;
+      line-height: 1.7;
+      margin-bottom: 1rem;
+    }
+
+    .testi-card cite {
+      font-size: 0.8rem;
+      color: var(--gold);
+      font-style: normal;
+      font-weight: 600;
+    }
+
+    @media (max-width: 900px) {
+      .use-case-grid { grid-template-columns: repeat(2, 1fr); }
+      .testimonial-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 768px) {
+      .feature-row { grid-template-columns: 1fr; gap: 2rem; }
+      .feature-row.reverse .feature-text { order: 0; }
+      .feature-row.reverse .feature-visual { order: 0; }
+      .use-case-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 540px) {
+      .use-case-grid { grid-template-columns: 1fr; }
+      .testimonial-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVIGATION -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <img src="images/logo.svg" alt="EASTLONE Cafe" onerror="this.src='images/logo.jpg'" />
+      </a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="menu.html">Menu</a></li>
+        <li><a href="experience.html" class="active">Experience</a></li>
+        <li><a href="events.html">Events</a></li>
+        <li><a href="contact.html" class="nav-cta">Visit Us</a></li>
+      </ul>
+      <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <div class="page-hero">
+    <div class="container">
+      <p class="section-label">The Vibe</p>
+      <h1>Why People Love EASTLONE Cafe</h1>
+      <div class="gold-rule center"></div>
+      <p>Reviews describe it as cozy, inviting, and a great place to relax, work, or enjoy time with friends.</p>
+    </div>
+  </div>
+
+  <!-- INTRO -->
+  <section class="exp-intro">
+    <div class="container">
+      <div class="text-center fade-in">
+        <p class="exp-intro-text">
+          EASTLONE Cafe is designed for slow moments and good conversations. Guests love the serene atmosphere, quality brews, and the feeling of having a café that is both laid-back and memorable. Reviews repeatedly highlight the café as cozy, inviting, and a great place to relax, vibe, work, or enjoy time with friends.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURE ROWS -->
+  <section class="features-section">
+    <div class="container">
+
+      <div class="feature-row fade-in">
+        <div class="feature-text">
+          <p class="feature-eyebrow">01 — Atmosphere</p>
+          <h2>Cozy Atmosphere</h2>
+          <div class="gold-rule"></div>
+          <p>A space that feels warm, relaxed, and easy to settle into. EASTLONE Cafe was built with comfort in mind — from the rustic décor and soft lighting to the unhurried pace that encourages you to stay longer than planned. It's the kind of place that feels familiar from the first visit.</p>
+        </div>
+        <div class="feature-visual fade-in" style="overflow:hidden; padding:0;">
+          <img src="images/interior-night.jpg" alt="Cozy EASTLONE interior"
+               style="width:100%;height:100%;object-fit:cover;" loading="lazy" />
+        </div>
+      </div>
+
+      <div class="feature-row reverse fade-in">
+        <div class="feature-visual" style="overflow:hidden; padding:0;">
+          <img src="images/drinks-tray.jpg" alt="EASTLONE signature drinks"
+               style="width:100%;height:100%;object-fit:cover;" loading="lazy" />
+        </div>
+        <div class="feature-text">
+          <p class="feature-eyebrow">02 — Drinks</p>
+          <h2>Signature Drinks</h2>
+          <div class="gold-rule"></div>
+          <p>Try well-loved picks like the Spanish Latte, White Mocha, Dirty Horchata, and more. Each drink is handcrafted with care, using quality ingredients and a recipe refined for flavors that stick with you. Whether you're a coffee purist or exploring new sips, there's something on the menu for every mood.</p>
+        </div>
+      </div>
+
+      <div class="feature-row fade-in">
+        <div class="feature-text">
+          <p class="feature-eyebrow">03 — Flexibility</p>
+          <h2>Good for Every Kind of Visit</h2>
+          <div class="gold-rule"></div>
+          <p>Solo coffee run, study session, work break, date stop, or casual catch-up — EASTLONE fits the occasion. With Wi-Fi, available outlets, and a relaxed environment that never feels rushed, it's an ideal spot to settle in for an hour or an afternoon. Multiple service options mean you can enjoy EASTLONE your way: dine-in, takeaway, delivery, or drive-through.</p>
+        </div>
+        <div class="feature-visual fade-in" style="overflow:hidden; padding:0;">
+          <img src="images/coffee-book.jpg" alt="Work and study at EASTLONE"
+               style="width:100%;height:100%;object-fit:cover;" loading="lazy" />
+        </div>
+      </div>
+
+      <div class="feature-row reverse fade-in">
+        <div class="feature-visual" style="overflow:hidden; padding:0;">
+          <img src="images/cafe-open-night.jpg" alt="Community at EASTLONE"
+               style="width:100%;height:100%;object-fit:cover;" loading="lazy" />
+        </div>
+        <div class="feature-text">
+          <p class="feature-eyebrow">04 — Community</p>
+          <h2>Community Feel</h2>
+          <div class="gold-rule"></div>
+          <p>EASTLONE Cafe is more than a coffee spot — it's a place where Iligan gathers. A café where people can connect, share stories, and make everyday moments better. The staff creates a welcoming atmosphere where regulars feel known, and newcomers feel immediately at ease. You leave feeling more than just caffeinated.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- USE CASES -->
+  <section class="use-cases">
+    <div class="container">
+      <div class="text-center fade-in">
+        <p class="section-label">Perfect For</p>
+        <h2>Good for Every Kind of Day</h2>
+        <div class="gold-rule center"></div>
+      </div>
+      <div class="use-case-grid fade-in">
+        <div class="use-case-card">
+          <div class="uc-icon">☕</div>
+          <h3>Solo Coffee Date</h3>
+          <p>Grab a corner seat, your favorite drink, and enjoy some peaceful me-time.</p>
+        </div>
+        <div class="use-case-card">
+          <div class="uc-icon">👥</div>
+          <h3>Group Catch-Up</h3>
+          <p>Comfortable seating, great drinks, and good energy — perfect for catching up with friends.</p>
+        </div>
+        <div class="use-case-card">
+          <div class="uc-icon">💼</div>
+          <h3>Remote Work</h3>
+          <p>Wi-Fi, outlets, and a calm atmosphere — EASTLONE is your go-to remote office.</p>
+        </div>
+        <div class="use-case-card">
+          <div class="uc-icon">📚</div>
+          <h3>Study Sessions</h3>
+          <p>A quiet, comfortable setting where students can focus and fuel their studies.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="testimonials">
+    <div class="container">
+      <div class="fade-in">
+        <p class="section-label">What Guests Say</p>
+        <h2>Heard from the Community</h2>
+        <div class="gold-rule center"></div>
+      </div>
+      <div class="testimonial-grid fade-in">
+        <div class="testi-card">
+          <div class="stars">★★★★★</div>
+          <p>"EASTLONE is a hidden gem — the vibe is so cozy and the Spanish Latte is absolutely perfect. I come here every week."</p>
+          <cite>— Regular Guest, Iligan City</cite>
+        </div>
+        <div class="testi-card">
+          <div class="stars">★★★★★</div>
+          <p>"Great relaxing roadside café. I love working here — the Wi-Fi is solid and the Dirty Horchata is my new favorite drink."</p>
+          <cite>— Remote Worker</cite>
+        </div>
+        <div class="testi-card">
+          <div class="stars">★★★★★</div>
+          <p>"A comfortable place for dates and quiet time. The atmosphere is warm and welcoming — we always stay longer than we planned."</p>
+          <cite>— Couple Visit</cite>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section style="background: var(--dark); text-align:center; border-top: 1px solid var(--border-sub);">
+    <div class="container fade-in">
+      <p class="section-label">Ready to Visit?</p>
+      <h2 style="font-size:2.2rem; margin-bottom:1rem;">Come Experience It Yourself</h2>
+      <div class="gold-rule center"></div>
+      <p style="color:var(--cream-dim); margin-bottom:2rem; max-width:480px; margin-left:auto; margin-right:auto;">
+        Open from 2PM daily — drop in, settle in, and let EASTLONE be your spot.
+      </p>
+      <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;">
+        <a href="contact.html" class="btn btn-primary">Get Directions</a>
+        <a href="menu.html" class="btn btn-outline">See Menu</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <img src="images/logo.svg" alt="EASTLONE Cafe" onerror="this.src='images/logo.jpg'" />
+          <p>EASTLONE Cafe is your cozy coffee retreat in Iligan City — serving handcrafted drinks, comforting vibes, and a space to slow down, sip, and stay awhile.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Navigate</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="menu.html">Menu</a></li>
+            <li><a href="experience.html">Experience</a></li>
+            <li><a href="events.html">Events</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Hours</h4>
+          <ul>
+            <li><a>Mon – Thu: 2PM – 10PM</a></li>
+            <li><a>Fri – Sun: 2PM – 12AM</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Find Us</h4>
+          <ul>
+            <li><a>Purok Santan, Sta. Felomina</a></li>
+            <li><a>Iligan City, Lanao del Norte</a></li>
+            <li><a href="tel:+639605290945">+63 960 529 0945</a></li>
+            <li><a href="https://www.facebook.com/eastlonecafe/" target="_blank">Facebook</a></li>
+            <li><a href="https://www.instagram.com/eastlonecafe/" target="_blank">Instagram</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 EASTLONE Cafe. All rights reserved.</p>
+        <p>Iligan City, Philippines</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 60));
+    function toggleMenu() { document.getElementById('navLinks').classList.toggle('open'); }
+    const faders = document.querySelectorAll('.fade-in');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.12 });
+    faders.forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>

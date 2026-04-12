@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 160" fill="none">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=Dancing+Script:wght@700&amp;display=swap');
+      .wordmark { font-family: 'Bebas Neue', 'Arial Black', Impact, sans-serif; font-size: 88px; fill: #ffffff; letter-spacing: 2px; }
+      .script   { font-family: 'Dancing Script', cursive; font-size: 40px; fill: #ffffff; }
+      .reg      { font-family: 'Bebas Neue', 'Arial Black', sans-serif; font-size: 22px; fill: #ffffff; }
+    </style>
+  </defs>
+
+  <!-- Main EASTLONE wordmark -->
+  <text class="wordmark" x="10" y="96">EASTLONE</text>
+
+  <!-- Registered mark -->
+  <text class="reg" x="494" y="46">®</text>
+
+  <!-- Cafe script below -->
+  <text class="script" x="230" y="148">Cafe</text>
+</svg>
